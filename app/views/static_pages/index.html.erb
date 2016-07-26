@@ -27,12 +27,19 @@
 
 <script>
   $(function() {
-  	$('#new-form').submit(function(event) {
-  		event.preventDefault();
-  		console.log("intercepted.");
-  		var textbox = $('.new-todo');
-  		console.log("Task:"	 , textbox.val());
-  	});
+  	// $('#new-form').submit(function(event) {
+  	// 	event.preventDefault();
+  	// 	var textbox = $('.new-todo');
+  	// 	var payload = {
+   //      	task: {
+   //        		title: textbox.val()
+   //      	}
+   //    	};
+   //    	console.log(payload);
+	  // 	$.post("/tasks", payload).success(function(data) {
+	  // 		console.log(data);
+	  // 	});
+  	// });
     // The taskHtml method takes in a JavaScript representation
     // of the task and produces an HTML representation using
     // <li> tags
@@ -50,7 +57,7 @@
     // an event that fires from an HTML representation of
     // the toggle checkbox and  performs an API request to toggle
     // the value of the `done` field
-    	function toggleTasks(e) {
+    	function toggleTask(e) {
    			var itemId = $(e.target).data("id");
         	//console.log(itemId);
 
@@ -75,8 +82,27 @@
    		var ulTodos = $('.todo-list');
    		ulTodos.html(htmlString);
 
-   		$('.toggle').change(toggleTasks);  //runs toggleTasks code when there is a change to toggle
+   		$('.toggle').change(toggleTask);  //runs toggleTasks code when there is a change to toggle
 
     });
+ 
+        $('#new-form').submit(function(event) {
+  		event.preventDefault();
+  		var textbox = $('.new-todo');
+  		var payload = {
+        	task: {
+          		title: textbox.val()
+        	}
+      	};
+      	console.log(payload);
+	  	$.post("/tasks", payload).success(function(data) {
+	  		var htmlString = taskHtml(data);
+	  		var ulTodos = $(".todo-list");
+	  		ulTodos.append(htmlString); //appends new item to todo-list ul
+	  		$(".toggle").click(toggleTask) //so new tasks will respond to toggleTask functions
+	  	});
+  	});
+
+
   });
 </script>

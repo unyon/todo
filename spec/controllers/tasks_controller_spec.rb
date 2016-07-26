@@ -24,10 +24,19 @@ RSpec.describe TasksController, type: :controller do
 		it "should allow tasks to be marked as done" do
 			task = FactoryGirl.create(:task, done: false)
 			put :update, id: task.id, task: {done: true}
-			expect(response).to have_http_status :success
+			expect(response).to have_http_status(:success)
 			task.reload
 			expect(task.done).to eq(true)
 		end
 	end
 
+	describe "task#create" do
+		it "should allow new tasks to be created" do
+			post :create, task: {title: "Fix things"}
+			expect(response).to have_http_status(:success)
+			response_value = ActiveSupport::JSON.decode(@response.body)#will parse the response as JSON and ensure the title has been populated
+			expect(response_value['title']).to eq("Fix things")
+      		expect(Task.last.title).to eq("Fix things")
+		end
+	end
 end
