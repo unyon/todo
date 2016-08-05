@@ -22,6 +22,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+#to execute js only on single page
+gem 'paloma', '~> 5.0.0'
 
 gem 'rails_12factor', group: :production
 

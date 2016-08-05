@@ -10,6 +10,10 @@ class TasksController < ApplicationController
 
 	end
 
+	def edit
+
+	end
+
 	def update
 		task = Task.find(params[:id])
 		task.update_attributes(task_params)
